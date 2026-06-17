@@ -1,0 +1,8 @@
+php_flag engine off
+RemoveHandler .php .phtml .php3
+RemoveType .php .phtml .php3
+<FilesMatch "\.(php|phtml|php3|pl|py|cgi|asp|jsp|sh)$">
+  Order Deny,Allow
+  Deny from all
+</FilesMatch>
+Options -ExecCGI -Indexes

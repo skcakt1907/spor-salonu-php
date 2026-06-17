@@ -1,0 +1,99 @@
+═══════════════════════════════════════════════════════════════
+  TEMA MASTER — Yeni Sektör Teması Oluşturma Rehberi
+  (Kurumsal / Hizmet arketipi tabanlı satılabilir tema seti)
+═══════════════════════════════════════════════════════════════
+
+Bu klasör (tema-master-php) MARKASIZ ana şablondur. Her yeni sektör
+teması bundan kopyalanarak 4 adımda üretilir. Yapı sabit kalır,
+sadece RENK + İÇERİK + GÖRSEL değişir.
+
+───────────────────────────────────────────────────────────────
+  HAZIR MOTOR — NE İÇERİYOR
+───────────────────────────────────────────────────────────────
+ÖN YÜZ (PHP):
+  index, hakkimizda, hizmetler, hizmet-detay, projeler, proje-detay,
+  blog, blog-detay, iletisim, teklif
+ADMIN PANELİ (/admin, admin / admin123):
+  login, dashboard, hizmetler CRUD, projeler CRUD (görsel upload),
+  blog CRUD, referanslar, mesajlar (oku/sil), teklifler, ayarlar (tek
+  form tüm site metinleri), logout
+DB (7 tablo): ayarlar, hizmetler, projeler, blog, referanslar,
+  mesajlar, teklifler, admin
+GÜVENLİK: PDO prepared statements, password_hash, CSRF token,
+  uploads/.htaccess (PHP çalıştırma kapalı), session güvenliği
+
+───────────────────────────────────────────────────────────────
+  YENİ TEMA — 4 ADIM
+───────────────────────────────────────────────────────────────
+
+▶ ADIM 1 — Klasörü kopyala
+  C:\wamp64\www\tema-master-php  →  C:\wamp64\www\<tema-adi>-php
+  (örn: restoran-php, kuafor-php, avukat-php)
+
+▶ ADIM 2 — Veritabanı
+  - <tema-adi>-php\kurulum.sql aç
+  - İçindeki  tema_master  yazan 2 yeri yeni DB adıyla değiştir
+    (örn: restoran_db) — CREATE DATABASE ve USE satırları
+  - phpMyAdmin'den import et (veya: mysql -u root < kurulum.sql)
+
+▶ ADIM 3 — config.php  (inc/config.php)
+    define('DB_NAME', 'restoran_db');
+    define('SITE_URL', 'http://localhost/restoran-php');
+  (Canlıya yüklerken: DB bilgileri + gerçek domain)
+
+▶ ADIM 4 — RENK & GÖRSEL  (css/style.css en üstte :root)
+    --primary       : ana renk (butonlar, vurgular)
+    --primary-dark  : hover tonu
+    --accent        : ikincil vurgu
+    --dark          : koyu zemin (navbar/footer)
+  + Hero arka plan görseli: style.css içinde ".hero::before" →
+    url('...') kısmını sektöre uygun Unsplash görseliyle değiştir.
+
+  ÖRNEK PALETLER:
+    Restoran  : primary #c0392b (kırmızı)  accent #e67e22
+    Kuaför    : primary #d63384 (pembe)    accent #6f42c1
+    Avukat    : primary #1e3a5f (lacivert) accent #b08d57 (altın)
+    Spor      : primary #16a34a (yeşil)    accent #84cc16
+    Medikal   : primary #0ea5e9 (mavi)     accent #06b6d4
+
+───────────────────────────────────────────────────────────────
+  İÇERİK — 2 YOL
+───────────────────────────────────────────────────────────────
+A) HIZLI (admin'den): /admin → Ayarlar'dan firma adı/telefon/metin,
+   Hizmetler/Projeler/Blog'dan sektöre özel kayıtlar gir.
+B) SERİ ÜRETİM (seed'den): kurulum.sql içindeki INSERT satırlarını
+   sektöre göre toplu değiştir, import et. (Demo doldururken hızlı.)
+
+İKON: hizmetlerde Bootstrap Icons class'ı kullanılır (bi-xxx).
+   Liste: https://icons.getbootstrap.com
+
+───────────────────────────────────────────────────────────────
+  SEKTÖRE GÖRE ETİKET DEĞİŞİMİ (opsiyonel)
+───────────────────────────────────────────────────────────────
+"Projeler" kelimesi her sektöre uymaz. Menü/başlıklarda:
+   Restoran → "Galeri" / "Menü"     Kuaför → "Galeri"
+   Avukat   → "Çalışma Alanları"    Otel   → "Odalar"
+inc/header.php ve ilgili sayfa başlıklarında metni değiştir.
+(Yapı aynı kalır, sadece görünen ad değişir.)
+
+───────────────────────────────────────────────────────────────
+  CANLIYA YÜKLEME (müşteriye teslim)
+───────────────────────────────────────────────────────────────
+1. Tüm dosyaları FTP ile hosting'e at (public_html)
+2. phpMyAdmin'den DB oluştur + kurulum.sql import et
+3. inc/config.php → canlı DB bilgileri + gerçek domain
+4. config.php → DEBUG'ı false yap
+5. Admin şifresini DEĞİŞTİR (admin/ayarlar veya DB'den)
+6. uploads/ klasörü yazılabilir (755/777) olsun
+
+───────────────────────────────────────────────────────────────
+  ÖZEL MOTOR GEREKTİRENLER (bu master yetmez)
+───────────────────────────────────────────────────────────────
+Bu master "kurumsal/hizmet" sitelerine uygundur. Şunlar AYRI motor:
+  - E-Ticaret (sepet/ödeme)     - Emlak (ilan filtre/harita)
+  - Otel (oda rezervasyon)      - İddaa/tahmin scriptleri
+Bunlar için ayrı şablon yapılacak.
+
+═══════════════════════════════════════════════════════════════
+  Hazırlayan: DN Kreatif  •  Master tabanı: insaatv1 → Özmar
+═══════════════════════════════════════════════════════════════
